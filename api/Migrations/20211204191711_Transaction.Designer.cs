@@ -12,7 +12,7 @@ using api.Infrastructure.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(TransactionContext))]
-    [Migration("20211204163217_Transaction")]
+    [Migration("20211204191711_Transaction")]
     partial class Transaction
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,8 +101,9 @@ namespace api.Migrations
                         .HasColumnType("int")
                         .HasColumnName("InstallmentsNumber");
 
-                    b.Property<int>("LastCardDigits")
-                        .HasColumnType("int")
+                    b.Property<string>("LastCardDigits")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("LastCardDigits");
 
                     b.Property<decimal>("NetAmount")

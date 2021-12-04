@@ -24,7 +24,7 @@ namespace api.Migrations
                     NetAmount = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
                     FixedRateCharged = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
                     InstallmentsNumber = table.Column<int>(type: "int", nullable: false),
-                    LastCardDigits = table.Column<int>(type: "int", nullable: false)
+                    LastCardDigits = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

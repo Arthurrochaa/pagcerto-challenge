@@ -99,8 +99,9 @@ namespace api.Migrations
                         .HasColumnType("int")
                         .HasColumnName("InstallmentsNumber");
 
-                    b.Property<int>("LastCardDigits")
-                        .HasColumnType("int")
+                    b.Property<string>("LastCardDigits")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("LastCardDigits");
 
                     b.Property<decimal>("NetAmount")
