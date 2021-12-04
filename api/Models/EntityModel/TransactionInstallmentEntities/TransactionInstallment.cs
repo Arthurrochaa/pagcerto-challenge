@@ -13,6 +13,6 @@ namespace api.Models.EntityModel.TransactionInstallmentModels
         public DateTime? TransferDate { get; set; }
 
         public long TransactionNSU { get; set; }
-        public Transaction Transaction { get; set; }
+        public Transaction? Transaction { get; set; }
     }
 }

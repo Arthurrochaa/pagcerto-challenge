@@ -1,6 +1,7 @@
 ﻿using api.Extensions;
 using api.Models.EntityModel.TransactionEntities;
 using api.Models.EntityModel.Transactions;
+using api.Models.Enums;
 using api.Models.Validations;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,7 +28,8 @@ namespace api.Models.ViewModel.TransactionViewModels
             LastCardDigits = CardDigits.LastFourCharacters(),
             CreatedAt = DateTime.UtcNow,
             FixedRateCharged = TransactionRules.FixedRate,
-            NetAmount = GrossAmount
+            NetAmount = GrossAmount,
+            AcquirerConfirmation = AcquirerStatus.None
         };
     }
 }

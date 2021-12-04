@@ -33,7 +33,7 @@ namespace api.Models.ServiceModel.TransactionServices
         }
 
         private bool ApproveCreditCard(string firstCardDigits) 
-            => firstCardDigits == TransactionRules.InvalidFirstDigits;
+            => firstCardDigits != TransactionRules.InvalidFirstDigits;
 
     }
 }

@@ -16,21 +16,19 @@ namespace api.Models.EntityModel.Transactions
         public decimal NetAmount { get; set; }
         public decimal FixedRateCharged { get; set; }
         public int InstallmentsNumber { get; set; }
-        public string LastCardDigits { get; set; }
+        public string LastCardDigits { get; set; } = "";
 
         public ICollection<TransactionInstallment> TransactionInstallments { get; set; }
 
         public void Disapprove()
         {
             DisapprovalDate = DateTime.UtcNow;
-            AcquirerConfirmation = AcquirerStatus.Refused;
             InstallmentsNumber = 0;
         }
 
         public Transaction Approve()
         {
             ApprovalDate = DateTime.UtcNow;
-            AcquirerConfirmation = AcquirerStatus.Refused;
 
             return this;
         }
@@ -43,6 +41,25 @@ namespace api.Models.EntityModel.Transactions
 
         public Transaction GenerateParcels()
         {
+            var installments = new List<TransactionInstallment>();
+
+            decimal valuePerInstallment = NetAmount / InstallmentsNumber;
+            for(var i = 0; i < InstallmentsNumber; i++)
+            {
+                var parcelNumber = i + 1;
+                var daysUntilExpiration = parcelNumber * 30;
+
+                installments.Add(new TransactionInstallment
+                {
+                    ParcelNumber = parcelNumber,
+                    GrossAmount = valuePerInstallment,
+                    NetAmount = valuePerInstallment,
+                    ExpectedReceiptDate = DateTime.UtcNow.AddDays(daysUntilExpiration)
+                });
+
+                TransactionInstallments = installments;
+            }
+
             return this;
         }
     }
