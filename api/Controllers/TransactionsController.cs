@@ -17,16 +17,16 @@ namespace api.Controllers
             var transaction = model.Map();
 
             var paymentResult = await transactionService.Process(transaction, model.CardDigits.FirstFourCharacters());
-            if (!paymentResult.Success) return new BaseErrorResult(paymentResult.Error);
+            if (!paymentResult.successful) return new BaseErrorResult(paymentResult.error);
 
-            return new TransactionSuccessResult(paymentResult.Transaction!);
+            return new TransactionSuccessResult(paymentResult.transaction!);
         }
 
         [HttpGet, Route("{transactionNSU:long}")]
         public async Task<IActionResult> Find([FromRoute] long transactionNSU, [FromServices] ITransactionService transactionService)
         {
             var transaction = await transactionService.FindByNSU(transactionNSU);
-            if (transaction == null) return new TransactionNotFoundResult();
+            if (transaction == null) return new BaseNotFoundResult("TRANSACTION_NOT_FOUND");
 
             return new TransactionSuccessResult(transaction!);
         }

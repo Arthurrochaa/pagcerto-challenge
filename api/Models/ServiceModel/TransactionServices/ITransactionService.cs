@@ -6,7 +6,7 @@ namespace api.Models.ServiceModel.TransactionServices
 {
     public interface ITransactionService
     {
-        public Task<TransactionProcessResult> Process(Transaction transaction, string firstCardDigits);
+        public Task<(bool successful, string error, Transaction? transaction)> Process(Transaction transaction, string firstCardDigits);
         public Task<Transaction?> FindByNSU(long transactionNSU);
         public Task<ICollection<Transaction>> ListApprovedTransactions();
 

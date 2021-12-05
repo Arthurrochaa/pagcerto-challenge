@@ -5,6 +5,7 @@ namespace api.Models.ServiceModel.AdvanceRequestServices
 {
     public interface IAdvanceRequestService
     {
-        public Task<ProcessRequestResult> ProcessRequest(ICollection<long> transactionNSUs);
+        public Task<(bool successful, string error, AdvanceTransactionRequest? advanceRequest)> ProcessRequest(ICollection<long> transactionNSUs);
+        public Task<(bool successful, string error, AdvanceTransactionRequest? advanceRequest)> StartAnalysis(long requestId);
     }
 }

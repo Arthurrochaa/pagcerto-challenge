@@ -19,7 +19,7 @@ namespace api.Models.ServiceModel.TransactionServices
         public async Task<Transaction?> FindByNSU(long transactionNSU)
             => await _transactionRepository.FindByNSU(transactionNSU);
 
-        public async Task<TransactionProcessResult> Process(Transaction transaction, string firstCardDigits)
+        public async Task<(bool successful, string error, Transaction? transaction)> Process(Transaction transaction, string firstCardDigits)
         {
             var cardHasApproved = ApproveCreditCard(firstCardDigits);
             if (!cardHasApproved) transaction.Disapprove();
@@ -32,9 +32,9 @@ namespace api.Models.ServiceModel.TransactionServices
             }
 
             var successful = await _transactionRepository.Create(transaction);
-            if(!successful) return new TransactionProcessResult(successful, FailedToPersist, null);
+            if(!successful) return (successful, FailedToPersist, null);
 
-            return new TransactionProcessResult(successful, string.Empty, transaction);
+            return (successful, string.Empty, transaction);
         }
 
         private bool ApproveCreditCard(string firstCardDigits) 

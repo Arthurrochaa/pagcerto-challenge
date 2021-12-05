@@ -22,5 +22,10 @@ namespace api.Models.EntityModel.AdvanceTransactionEntities
             RequestedTransactions = transactions,
             RequestedAmount = transactions.Sum(t => t.NetAmount)
         };
+
+        public void StartAnalysis() { 
+            AnalysisStartedAt = DateTime.UtcNow;
+            AnalysisStatus = AnalysisStatus.UnderAnalysis;
+        }
     }
 }

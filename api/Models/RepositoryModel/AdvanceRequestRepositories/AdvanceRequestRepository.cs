@@ -52,5 +52,11 @@ namespace api.Models.RepositoryModel.AdvanceRequestRepositories
                 return null;
             }
         }
+
+        public async Task Update(AdvanceTransactionRequest advanceRequest)
+        {
+            _context.AdvanceTransactionRequests.Update(advanceRequest);
+            await _context.SaveChangesAsync();
+        }
     }
 }
