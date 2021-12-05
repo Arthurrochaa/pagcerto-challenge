@@ -43,5 +43,11 @@ namespace api.Models.RepositoryModel.TransactionRepositories
             => await _context.Transactions.WhereApproved()
             .IncludeInstallments()
             .ToListAsync();
+
+        public async Task<ICollection<Transaction>> ListByNSUs(ICollection<long> transactionNSUs)
+            => await _context.Transactions.WhereNSUs(transactionNSUs)
+            .IncludeInstallments()
+            .IncludeAdvanceRequest()
+            .ToListAsync();
     }
 }

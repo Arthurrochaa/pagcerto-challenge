@@ -17,7 +17,7 @@ namespace api.Controllers
             var transaction = model.Map();
 
             var paymentResult = await transactionService.Process(transaction, model.CardDigits.FirstFourCharacters());
-            if (!paymentResult.Success) return new TransactionErrorResult(paymentResult.Error);
+            if (!paymentResult.Success) return new BaseErrorResult(paymentResult.Error);
 
             return new TransactionSuccessResult(paymentResult.Transaction!);
         }

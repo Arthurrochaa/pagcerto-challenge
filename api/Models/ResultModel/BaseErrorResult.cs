@@ -2,9 +2,9 @@
 
 namespace api.Models.ResultModel
 {
-    public class TransactionErrorResult : IActionResult
+    public class BaseErrorResult : IActionResult
     {
-        public TransactionErrorResult(string error)
+        public BaseErrorResult(string error)
         {
             Error = error;
         }

@@ -1,4 +1,5 @@
-﻿using api.Models.EntityModel.TransactionEntities;
+﻿using api.Models.EntityModel.AdvanceTransactionEntities;
+using api.Models.EntityModel.TransactionEntities;
 using api.Models.EntityModel.TransactionInstallmentModels;
 using api.Models.Enums;
 
@@ -17,6 +18,9 @@ namespace api.Models.EntityModel.Transactions
         public int InstallmentsNumber { get; set; }
         public string LastCardDigits { get; set; } = "";
         public AcquirerStatus AcquirerConfirmation { get; set; }
+
+        public long? AdvanceTransactionRequestID { get; set; }
+        public AdvanceTransactionRequest? AdvanceTransactionRequest { get; set; }
 
         public ICollection<TransactionInstallment> TransactionInstallments { get; set; }
 

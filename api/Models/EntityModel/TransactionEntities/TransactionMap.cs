@@ -33,6 +33,10 @@ namespace api.Models.EntityModel.TransactionModels
             entity.HasMany(t => t.TransactionInstallments)
                 .WithOne(ti => ti.Transaction)
                 .HasForeignKey(ti => ti.TransactionNSU);
+
+            entity.HasOne(t => t.AdvanceTransactionRequest)
+                .WithMany(atr => atr.RequestedTransactions)
+                .HasForeignKey(t => t.AdvanceTransactionRequestID);
         }
     }
 }

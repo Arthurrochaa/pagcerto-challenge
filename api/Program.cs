@@ -1,5 +1,7 @@
 using api.Infrastructure.Data;
+using api.Models.RepositoryModel.AdvanceRequestRepositories;
 using api.Models.RepositoryModel.TransactionRepositories;
+using api.Models.ServiceModel.AdvanceRequestServices;
 using api.Models.ServiceModel.TransactionServices;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -18,6 +20,8 @@ services
 
 services.AddTransient<ITransactionService, TransactionService>();
 services.AddTransient<ITransactionRepository, TransactionRepository>();
+services.AddTransient<IAdvanceRequestRepository, AdvanceRequestRepository>();
+services.AddTransient<IAdvanceRequestService, AdvanceRequestService>();
 
 var app = builder.Build();
 
