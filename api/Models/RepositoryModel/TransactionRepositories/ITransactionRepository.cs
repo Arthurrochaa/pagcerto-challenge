@@ -6,5 +6,6 @@ namespace api.Models.RepositoryModel.TransactionRepositories
     {
         public Task<bool> Create(Transaction transaction);
         public Task<Transaction?> FindByNSU(long nsu);
+        public Task<ICollection<Transaction>> ListApproved();
     }
 }

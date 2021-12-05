@@ -40,5 +40,7 @@ namespace api.Models.ServiceModel.TransactionServices
         private bool ApproveCreditCard(string firstCardDigits) 
             => firstCardDigits != TransactionRules.InvalidFirstDigits;
 
+        public async Task<ICollection<Transaction>> ListApprovedTransactions()
+            => await _transactionRepository.ListApproved();
     }
 }

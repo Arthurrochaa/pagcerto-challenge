@@ -14,5 +14,10 @@ namespace api.Models.EntityModel.TransactionEntities
         {
             return transactions.Where(transaction => transaction.NSU == transactionNsu);
         }
+
+        public static IQueryable<Transaction> WhereApproved(this IQueryable<Transaction> transactions)
+        {
+            return transactions.Where(transaction => transaction.ApprovalDate != null);
+        }
     }
 }

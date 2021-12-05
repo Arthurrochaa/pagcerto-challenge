@@ -38,5 +38,10 @@ namespace api.Models.RepositoryModel.TransactionRepositories
                 return null;
             }
         }
+
+        public async Task<ICollection<Transaction>> ListApproved()
+            => await _context.Transactions.WhereApproved()
+            .IncludeInstallments()
+            .ToListAsync();
     }
 }
