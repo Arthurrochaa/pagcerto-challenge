@@ -1,6 +1,7 @@
 ﻿using api.Infrastructure.Data;
 using api.Models.EntityModel.AdvanceRequestEntities;
 using api.Models.EntityModel.AdvanceTransactionEntities;
+using api.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Models.RepositoryModel.AdvanceRequestRepositories
@@ -52,6 +53,12 @@ namespace api.Models.RepositoryModel.AdvanceRequestRepositories
                 return null;
             }
         }
+
+        public async Task<ICollection<AdvanceTransactionRequest>> ListByStatus(AnalysisStatus? analysisStatus)
+            => await _context.AdvanceTransactionRequests
+                .WhereAnalysisStatus(analysisStatus)
+                .IncludeTransactions()
+                .ToListAsync();
 
         public async Task Update(AdvanceTransactionRequest advanceRequest)
         {

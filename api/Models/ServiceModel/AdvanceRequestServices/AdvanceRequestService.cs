@@ -2,7 +2,6 @@
 using api.Models.Enums;
 using api.Models.RepositoryModel.AdvanceRequestRepositories;
 using api.Models.RepositoryModel.TransactionRepositories;
-using api.Models.ResultModel.AdvanceRequestResults;
 
 namespace api.Models.ServiceModel.AdvanceRequestServices
 {
@@ -16,6 +15,9 @@ namespace api.Models.ServiceModel.AdvanceRequestServices
             _transactionRepository = transactionRepository;
             _requestRepository = requestRepository;
         }
+
+        public async Task<ICollection<AdvanceTransactionRequest>> ListRequests(AnalysisStatus? analysisStatus)
+            => await _requestRepository.ListByStatus(analysisStatus);
 
         public async Task<(bool successful, string error, AdvanceTransactionRequest? advanceRequest)> ProcessRequest(ICollection<long> transactionNSUs)
         {
