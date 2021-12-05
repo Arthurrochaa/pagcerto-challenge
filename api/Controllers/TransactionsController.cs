@@ -20,5 +20,14 @@ namespace api.Controllers
 
             return new TransactionSuccessResult(paymentResult.Transaction!);
         }
+
+        [HttpGet, Route("{transactionNSU:long}")]
+        public async Task<IActionResult> Find([FromRoute] long transactionNSU, [FromServices] ITransactionService transactionService)
+        {
+            var transaction = await transactionService.FindByNSU(transactionNSU);
+            if (transaction == null) return new TransactionNotFoundResult();
+
+            return new TransactionSuccessResult(transaction!);
+        }
     }
 }

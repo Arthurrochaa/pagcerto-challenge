@@ -9,5 +9,10 @@ namespace api.Models.EntityModel.TransactionEntities
         {
             return transactions.Include(transaction => transaction.TransactionInstallments);
         }
+
+        public static IQueryable<Transaction> WhereNSU(this IQueryable<Transaction> transactions, long transactionNsu)
+        {
+            return transactions.Where(transaction => transaction.NSU == transactionNsu);
+        }
     }
 }

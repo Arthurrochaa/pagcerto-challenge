@@ -7,5 +7,6 @@ namespace api.Models.ServiceModel.TransactionServices
     public interface ITransactionService
     {
         public Task<TransactionProcessResult> Process(Transaction transaction, string firstCardDigits);
+        public Task<Transaction?> FindByNSU(long transactionNSU);
     }
 }

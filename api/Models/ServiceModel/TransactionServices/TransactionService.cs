@@ -14,6 +14,11 @@ namespace api.Models.ServiceModel.TransactionServices
             _transactionRepository = transactionRepository;
         }
 
+        private const string FailedToPersist = "FAILED_TO_PERSIST";
+
+        public async Task<Transaction?> FindByNSU(long transactionNSU)
+            => await _transactionRepository.FindByNSU(transactionNSU);
+
         public async Task<TransactionProcessResult> Process(Transaction transaction, string firstCardDigits)
         {
             var cardHasApproved = ApproveCreditCard(firstCardDigits);
@@ -27,7 +32,7 @@ namespace api.Models.ServiceModel.TransactionServices
             }
 
             var successful = await _transactionRepository.Create(transaction);
-            if(!successful) return new TransactionProcessResult(successful, "FAILED_TO_PERSIST", null);
+            if(!successful) return new TransactionProcessResult(successful, FailedToPersist, null);
 
             return new TransactionProcessResult(successful, string.Empty, transaction);
         }

@@ -29,8 +29,9 @@ namespace api.Models.RepositoryModel.TransactionRepositories
             try
             {
                 return await _context.Transactions
+                    .WhereNSU(nsu)
                     .IncludeInstallments()
-                    .SingleOrDefaultAsync(t => t.NSU == nsu);
+                    .SingleOrDefaultAsync();
             }
             catch
             {
