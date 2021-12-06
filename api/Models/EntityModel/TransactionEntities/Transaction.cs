@@ -33,7 +33,6 @@ namespace api.Models.EntityModel.Transactions
         public Transaction Approve()
         {
             ApprovalDate = DateTime.UtcNow;
-
             return this;
         }
 
@@ -65,6 +64,28 @@ namespace api.Models.EntityModel.Transactions
 
                 TransactionInstallments = installments;
             }
+
+            return this;
+        }
+
+        public Transaction Anticipate()
+        {
+            Anticipated = true;
+            AcquirerConfirmation = AcquirerStatus.Approved;
+
+            foreach(var installment in TransactionInstallments)
+            {
+                installment.TransferDate = DateTime.UtcNow;
+                installment.AnticipatedAmount = installment.NetAmount - ((decimal)(3.8 / 100) * NetAmount);
+            }
+
+            return this;
+        }
+
+        public Transaction RefuseAnticipation()
+        {
+            Anticipated = false;
+            AcquirerConfirmation = AcquirerStatus.Refused;
 
             return this;
         }

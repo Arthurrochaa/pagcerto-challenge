@@ -8,5 +8,6 @@ namespace api.Models.RepositoryModel.TransactionRepositories
         public Task<Transaction?> FindByNSU(long nsu);
         public Task<ICollection<Transaction>> ListApproved();
         public Task<ICollection<Transaction>> ListByNSUs(ICollection<long> transactionNSUs);
+        public Task Update(Transaction transaction);
     }
 }

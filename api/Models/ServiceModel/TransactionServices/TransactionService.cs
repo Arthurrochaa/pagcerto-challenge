@@ -42,5 +42,30 @@ namespace api.Models.ServiceModel.TransactionServices
 
         public async Task<ICollection<Transaction>> ListApprovedTransactions()
             => await _transactionRepository.ListApproved();
+
+        public async Task<bool> AnticipateById(long transactionNSU)
+        {
+            var transaction = await _transactionRepository.FindByNSU(transactionNSU);
+            if (transaction == null) return false;
+
+            transaction.Anticipate();
+            await _transactionRepository.Update(transaction);
+
+            return true;
+        }
+
+        public async Task<ICollection<Transaction>> ListByNSUs(ICollection<long> transactionNSUs)
+            => await _transactionRepository.ListByNSUs(transactionNSUs);
+
+        public async Task<bool> RefuseAnticipationById(long transactionNSU)
+        {
+            var transaction = await _transactionRepository.FindByNSU(transactionNSU);
+            if (transaction == null) return false;
+
+            transaction.RefuseAnticipation();
+            await _transactionRepository.Update(transaction);
+
+            return true;
+        }
     }
 }

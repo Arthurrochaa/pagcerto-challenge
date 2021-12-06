@@ -3,7 +3,6 @@ using api.Models.ResultModel;
 using api.Models.ResultModel.AdvanceRequestResults;
 using api.Models.ServiceModel.AdvanceRequestServices;
 using api.Models.ViewModel.AdvanceRequestViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -35,6 +34,24 @@ namespace api.Controllers
             if (!startResult.successful) return new BaseNotFoundResult(startResult.error);
 
             return new AdvanceRequestSuccessResult(startResult.advanceRequest!);
+        }
+
+        [HttpPost, Route("approve/{requestId:long}")]
+        public async Task<IActionResult> Approve([FromRoute] long requestId, [FromBody] AdvanceRequestViewModel model, [FromServices] IAdvanceRequestService advanceRequestService)
+        {
+            var approveResult = await advanceRequestService.UpdateTransactions(requestId, true, model.TransactionNSUs.ToList());
+            if(!approveResult.successful) return new BaseErrorResult(approveResult.error);
+
+            return Ok();
+        }
+
+        [HttpPost, Route("disapprove/{requestId:long}")]
+        public async Task<IActionResult> Disapprove([FromRoute] long requestId, [FromBody] AdvanceRequestViewModel model, [FromServices] IAdvanceRequestService advanceRequestService)
+        {
+            var disapproveResult = await advanceRequestService.UpdateTransactions(requestId, false, model.TransactionNSUs.ToList());
+            if (!disapproveResult.successful) return new BaseErrorResult(disapproveResult.error);
+
+            return Ok();
         }
     }
 }

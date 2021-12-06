@@ -49,5 +49,11 @@ namespace api.Models.RepositoryModel.TransactionRepositories
             .IncludeInstallments()
             .IncludeAdvanceRequest()
             .ToListAsync();
+
+        public async Task Update(Transaction transaction)
+        {
+            _context.Transactions.Update(transaction);
+            await _context.SaveChangesAsync();
+        }
     }
 }
