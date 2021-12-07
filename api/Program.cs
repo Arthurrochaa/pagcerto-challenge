@@ -5,6 +5,7 @@ using api.Models.ServiceModel.AdvanceRequestServices;
 using api.Models.ServiceModel.TransactionServices;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -12,11 +13,28 @@ var configuration = builder.Configuration;
 
 services.AddDbContext<TransactionContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Database")));
-services
-    .AddControllers().AddJsonOptions(c => {
+
+services.AddControllers().AddJsonOptions(c => {
         c.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         c.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "Desafio Pagcerto",
+            Version = "v1",
+            Description = "API REST desenvolvida com o ASP.NET 6 + SQL Server + EF Core",
+            Contact = new OpenApiContact
+            {
+                Name = "Arthur Rocha",
+                Url = new Uri("https://github.com/Arthurrochaa"),
+                Email = "arthurrochafts@gmail.com"
+            }
+        });
+});
 
 services.AddTransient<ITransactionService, TransactionService>();
 services.AddTransient<ITransactionRepository, TransactionRepository>();
@@ -25,7 +43,12 @@ services.AddTransient<IAdvanceRequestService, AdvanceRequestService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json",
+        "Desafio Pagcerto");
+});
 
 app.UseHttpsRedirection();
 
